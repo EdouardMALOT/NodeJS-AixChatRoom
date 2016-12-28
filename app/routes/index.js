@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const passport = require('passport');
 
 //Standards routes
 //----------------
@@ -16,14 +17,13 @@ router
             res.render('chatroom');
         })
 
-        .get('/getsession', (req, res, next) => {
-            res.send('My favorite color : ' + req.session.favColor);
-        })
-        .get('/setsession', (req, res, next) => {
-            req.session.favColor = 'light Blue';
-            res.send('My favorite is now set ');
-        });  
+        .get('/auth/facebook', passport.authenticate('facebook'))
 
+        .get('/auth/facebook/callback', passport.authenticate('facebook', {
+				successRedirect: '/rooms',
+				failureRedirect: '/'
+			})
+        );
 
 //Default router
 //--------------

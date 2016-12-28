@@ -1,0 +1,11 @@
+{
+	"host": "http://localhost:3000",
+    "dbURI": "mongodb://test:test@ds145148.mlab.com:45148/em2512",
+    "sessionSecret": "voicilaclésecrete",
+    "fb": {
+        "clientID": "722090614631635",
+        "clientSecret": "321c761ced1f8fb8448144cb82393317",
+        "callbackURL": "//localhost:3000/auth/facebook/callback",
+		"profileFields": ["id", "displayName", "photos"]
+    }
+}
