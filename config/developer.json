@@ -1,0 +1,5 @@
+{
+    "host": "http://localhost:3000",
+    "dbURI": "mongodb://test:test@ds145148.mlab.com:45148/em2512",
+    "sessionSecret": "voici clé secrete"
+}
