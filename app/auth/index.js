@@ -35,7 +35,7 @@ const db = require('../db');
         
             let newChatUser= new db.userModel({
                 ProfilId: profile.id,
-                FullName: profile.displayName,
+                fullName: profile.displayName,
                 ProfilPic: profile.photos[0].value || ''
             });
 

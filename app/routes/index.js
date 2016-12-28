@@ -10,7 +10,14 @@ router
         })
 
         .get('/rooms', (req, res, next) => {
-            res.render('rooms');
+            console.log(" ");
+            console.log(" ");
+            console.log(" ");
+            console.log(" ");
+            console.log("user = ");
+            
+            console.dir(req.user);
+            res.render('rooms', { user: req.user});
         })
 
         .get('/chat', (req, res, next) => {
