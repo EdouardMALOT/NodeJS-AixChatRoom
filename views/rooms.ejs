@@ -5,6 +5,40 @@
 	<title>ChatCat - Rooms</title>
 	<link rel="stylesheet" href="./css/roomsStyles.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	
+	<script>
+		$(() => {
+			let socket = io('<%= hostUrl %>/roomsList');
+
+			socket.on('connect', () => console.log('Connected to server'));
+
+			//Function to update ChatRoom list
+			//--------------------------------
+				let renderChatRooms = (chatRooms) => {
+
+					//Create the list of rooms
+						let listStr = '';
+						for(let chat of chatRooms) {
+							listStr += `<a href="/chat/${chat.roomID}"><li>${chat.room}</li></a>`;
+						}
+
+					//Add the list to the DOM (After clear class).
+						$('#roomsListUL').html('').append(listStr);
+				}
+
+			//Get chat room list
+			//------------------
+				//Request chat room list
+					socket.emit('getChatRooms');
+
+				//get chat room lit
+					socket.on('chatRoomsList', (datas) => { renderChatRooms(JSON.parse(datas))});
+
+		});	
+
+	</script>
+
 </head>
 <body>
 	<div class="container">
@@ -23,7 +57,6 @@
 		<div class="roomsListDiv">
 			<ul class="roomsList" id="roomsListUL">
 			<!-- Loop list items here -->
-				<a href="chatroom.htm"><li>World Cuisine</li></a>
 				<a href="chatroom.htm"><li>Coffee and Conversations</li></a>
 			<!-- Loop ends -->
 			</ul>

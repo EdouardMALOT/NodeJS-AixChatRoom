@@ -4,6 +4,8 @@ const mongoStore = require('connect-mongo')(session);
 const config = require('../config');
 const db = require('../db'); 
 
+
+
 if(process.env.NODE_ENV === 'production') {
     //Init the session with settings for production
       module.exports = session({

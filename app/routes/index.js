@@ -1,7 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const passport = require('passport');
-
+const config = require('../config');
 
 //Helper function
 //---------------
@@ -22,11 +22,11 @@ router
         })
 
         .get('/rooms', [isAuthenticated, (req, res, next) => {
-            res.render('rooms', { user: req.user});
+            res.render('rooms', { user: req.user, hostUrl: config.host});
         }])
 
         .get('/chat', [isAuthenticated, (req, res, next) => {
-            res.render('chatroom', {user: req.user});
+            res.render('chatroom', {user: req.user, hostUrl: config.host});
         }])
 
         .get('/logout', (req, res, next) => {

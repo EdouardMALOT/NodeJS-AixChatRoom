@@ -15,6 +15,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes.router);
 
+
 let port = app.get('port');
-app.listen(port, () => console.log("Server listen on port", port));
+
+//IO server
+    let ioServer = app => {
+        app.locals.chatRooms = [];
+        const server = require('http').Server(app);
+        const io = require('socket.io')(server);
+        io.use( (socket, next) => { session(socket.request, {}, next) });
+        require('./app/socket')(io, app);
+        return server;
+    }
+
+ioServer(app).listen(port, () => console.log("Server listen on port", port));
 
