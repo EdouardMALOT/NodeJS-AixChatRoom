@@ -2,6 +2,18 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+
+//Helper function
+//---------------
+    let isAuthenticated = (req, res, next) => {
+        if(req.isAuthenticated()) {
+            next();
+        }else{
+            console.log(`An user try to access to \"${req.url}\" private pages without being login`)
+            res.redirect('/');
+        }
+    }
+
 //Standards routes
 //----------------
 router
@@ -9,19 +21,18 @@ router
             res.render('login');
         })
 
-        .get('/rooms', (req, res, next) => {
-            console.log(" ");
-            console.log(" ");
-            console.log(" ");
-            console.log(" ");
-            console.log("user = ");
-            
-            console.dir(req.user);
+        .get('/rooms', [isAuthenticated, (req, res, next) => {
             res.render('rooms', { user: req.user});
-        })
+        }])
 
-        .get('/chat', (req, res, next) => {
-            res.render('chatroom');
+        .get('/chat', [isAuthenticated, (req, res, next) => {
+            res.render('chatroom', {user: req.user});
+        }])
+
+        .get('/logout', (req, res, next) => {
+            console.log("Logout called");
+            req.logout();       //Call passport logout function
+            res.redirect('/');
         })
 
         .get('/auth/facebook', passport.authenticate('facebook'))
@@ -31,6 +42,8 @@ router
 				failureRedirect: '/'
 			})
         );
+
+
 
 //Default router
 //--------------
