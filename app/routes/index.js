@@ -2,6 +2,8 @@
 const router = require('express').Router();
 const passport = require('passport');
 const config = require('../config');
+const helper = require('../helper');
+
 
 //Helper function
 //---------------
@@ -25,8 +27,21 @@ router
             res.render('rooms', { user: req.user, hostUrl: config.host});
         }])
 
-        .get('/chat', [isAuthenticated, (req, res, next) => {
-            res.render('chatroom', {user: req.user, hostUrl: config.host});
+        .get('/chat/:id', [isAuthenticated, (req, res, next) => {
+
+            //Check if the rooms exist
+            let room = helper.getRoomFromId(req.app.locals.chatRooms, req.params.id);
+            
+            if(room !== undefined) {            
+                res.render('chatroom', {
+                    user: req.user, 
+                    hostUrl: config.host, 
+                    roomTitle: room.room,
+                    roomId: room.roomID
+                });
+            }else{
+                 return next();
+             }
         }])
 
         .get('/logout', (req, res, next) => {

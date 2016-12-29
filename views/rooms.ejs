@@ -8,6 +8,8 @@
 	<script src="/socket.io/socket.io.js"></script>
 	
 	<script>
+		'use strict';
+		
 		$(() => {
 			let socket = io('<%= hostUrl %>/roomsList');
 
@@ -34,6 +36,18 @@
 
 				//get chat room lit
 					socket.on('chatRoomsList', (datas) => { renderChatRooms(JSON.parse(datas))});
+
+			//Create new room btn
+			//-------------------
+				let newRoomInput = $("input[name='roomName']");
+				$('#createBtn').on('click', () => {
+					//If there is a title
+					if(newRoomInput.val() !== '') {
+						socket.emit('CreateNewRoom', newRoomInput.val());
+						newRoomInput.val('');
+					}
+
+				});
 
 		});	
 
