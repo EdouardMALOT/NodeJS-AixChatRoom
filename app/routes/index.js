@@ -31,13 +31,13 @@ router
 
             //Check if the rooms exist
             let room = helper.getRoomFromId(req.app.locals.chatRooms, req.params.id);
-            
+
             if(room !== undefined) {            
                 res.render('chatroom', {
                     user: req.user, 
                     hostUrl: config.host, 
                     roomTitle: room.room,
-                    roomId: room.roomID
+                    roomId: room.roomID,
                 });
             }else{
                  return next();

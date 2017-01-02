@@ -10,11 +10,20 @@
 	<script>
 		'use strict';
 
-		let socket = io('<%= hostUrl %>/roomsList');
+		let socket = io('<%= hostUrl %>/chatter');
+		let roomID = '<%= roomId %>';
+		let roomTitle = '<%= roomTitle %>';
+		let user = '<%= user.fullName %>';
+		let userPic = '<%= user.ProfilPic %>'
 
-		let roomID = '<%= roomId %>'
-		let roomTitle = '<%= roomTitle %>'
-
+		socket.on('connect', () => {
+			console.log("connect");
+			socket.emit('join', {
+				roomID,
+				user,
+				userPic
+			});
+		});
 
 
 	</script>

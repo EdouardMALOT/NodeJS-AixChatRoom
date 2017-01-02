@@ -41,4 +41,15 @@ module.exports = (io, app) => {
 
         });
    });
+
+   io.of('/chatter').on('connection', socket => {
+        //Join chat room
+        socket.on('join', (datas) =>{
+            let userList = helper.AddUserToRoom(allRooms, datas, socket);
+        
+        //Brodcast the new list of users
+            console.log('userList=', userList);
+        });
+   });
+   
 } 
