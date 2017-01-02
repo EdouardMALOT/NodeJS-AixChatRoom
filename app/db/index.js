@@ -1,11 +1,13 @@
 'use strict';
 
 const config = require('../config');
+const logger = require('../logger');
 const mongoose = require('mongoose').connect(config.dbURI);
+
 
 //Log error listener
     mongoose.connection.on('error', error => {
-        console.log("Mongoose db error :", error);
+        logger.log('error', 'Mongoose db error :'+ error);
     });
 
 //User schéma

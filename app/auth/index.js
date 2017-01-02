@@ -4,6 +4,7 @@ const passport = require('passport');
 const config = require('../config');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const db = require('../db');
+const logger = require('../logger');
 
 
 //Helper
@@ -31,7 +32,7 @@ const db = require('../db');
     let createNewUser = (profile) => {
         return new Promise((resolve, reject) => {
 
-            console.log("createNewUser called");
+            logger.log('info', "createNewUser called");
         
             let newChatUser= new db.userModel({
                 ProfilId: profile.id,
@@ -59,12 +60,12 @@ module.exports = () => {
 		// Find the user using the _id
 		findById(id)
 			.then(user => done(null, user))
-			.catch(error => console.log('Error when deserializing the user: ' + error));
+			.catch(error => logger.log('error', 'Error when deserializing the user: ' + error));
 	});
 
 	let authProcessor = (accessToken, refreshToken, profile, done) => {
 
-        console.log("authProcessor");
+        logger.log('info', "authProcessor");
         
 		// Find a user in the local db using profile.id
 		// If the user is found, return the user data using the done()
@@ -77,7 +78,7 @@ module.exports = () => {
 					// Create a new user and return
 					createNewUser(profile)
 						.then(newChatUser => done(null, newChatUser))
-						.catch(error => console.log('Error when creating new user: ' + error));
+						.catch(error => logger.log('error', 'Error when creating new user: ' + error));
 				}
 			});
 	}
