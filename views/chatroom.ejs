@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="/css/chatroomStyles.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
-	
+	<script src="https://widget.cloudinary.com/global/all.js"></script>
 	<script>
 	$(() => {
 		'use strict';
@@ -91,6 +91,31 @@
 				let parsedData = JSON.parse(datas);
 				updateFeed(parsedData.userPic, parsedData.message);
 			});
+
+
+		//Uploard files
+		//-------------
+			$('#uploadFile').on('click', function(evt) {
+				cloudinary.openUploadWidget( {cloud_name: 'df1t1qucd', upload_preset: 'lioxaajk'	}, (error, result) => {
+				
+				if(!error) {
+					let tmp = '';
+					for(let img of result) {
+						tmp += `<img src="${img.url}">`
+					}
+					updateFeed(userPic, tmp);
+
+					socket.emit('newMessage', {
+						roomID,
+						user,
+						userPic,
+						message: tmp
+					});
+
+				}
+			});
+			});
+
 	});
 	</script>
 

@@ -47,10 +47,15 @@ module.exports = (io, app) => {
         socket.on('join', (datas) =>{
             let userList = helper.AddUserToRoom(allRooms, datas, socket);
         
-        //Brodcast the new list of users
-            socket.broadcast.to(datas.roomID).emit('updateUserList', JSON.stringify(userList.users));
-        //Send back the list to the new user 
-            socket.emit('updateUserList', JSON.stringify(userList.users));
+        if(userList !== undefined) {
+            if(userList.users !== undefined) {       
+                //Brodcast the new list of users
+                socket.broadcast.to(datas.roomID).emit('updateUserList', JSON.stringify(userList.users));
+                //Send back the list to the new user 
+                socket.emit('updateUserList', JSON.stringify(userList.users));
+            }
+        }
+        
         });
 
 
