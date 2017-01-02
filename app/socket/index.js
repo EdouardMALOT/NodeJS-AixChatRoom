@@ -55,7 +55,7 @@ module.exports = (io, app) => {
                 socket.emit('updateUserList', JSON.stringify(userList.users));
             }
         }
-        
+
         });
 
 
