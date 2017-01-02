@@ -43,3 +43,5 @@
 {"level":"info","message":"GET /chat/1699aa3dd42b6d06a0e3325c5b88aa4b1ad6d3bac49dd2af 200 4323 - 4.293 ms\n","timestamp":"2017-01-02T15:13:24.134Z"}
 {"level":"info","message":"GET /logout 302 46 - 3.132 ms\n","timestamp":"2017-01-02T15:13:40.455Z"}
 {"level":"info","message":"GET / 304 - - 7.640 ms\n","timestamp":"2017-01-02T15:13:40.465Z"}
+{"level":"info","message":"GET / 304 - - 16.820 ms\n","timestamp":"2017-01-02T15:23:37.609Z"}
+{"level":"info","message":"GET /auth/facebook 302 0 - 9.933 ms\n","timestamp":"2017-01-02T15:23:38.947Z"}
