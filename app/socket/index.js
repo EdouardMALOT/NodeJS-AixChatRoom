@@ -61,6 +61,12 @@ module.exports = (io, app) => {
             //Brodcast the new list of user
             socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
         });
+
+        //Broadcast the new message to all users
+        socket.on('newMessage', data => {
+            console.log("newMessage received and Broadcast : ", data.message);
+            socket.broadcast.to(data.roomID).emit('inMessage', JSON.stringify(data));
+        });
    });
    
 } 

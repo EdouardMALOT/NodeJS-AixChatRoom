@@ -8,6 +8,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	
 	<script>
+	$(() => {
 		'use strict';
 
 		let socket = io('<%= hostUrl %>/chatter');
@@ -16,6 +17,7 @@
 		let user = '<%= user.fullName %>';
 		let userPic = '<%= user.ProfilPic %>'
 
+		
 		socket.on('connect', () => {
 			console.log("connect");
 			socket.emit('join', {
@@ -33,6 +35,17 @@
 					</div>`;
 		}
 
+
+		let updateFeed = (userPic, message) => {
+			let template = `<div class="chatBlock">
+								<div class="userPic"><img src="${userPic}"></div>
+								<div class="chatMsg">${message}</div>
+							</div>`;
+
+			$(template).hide().prependTo('.chatMessages').slideDown(200);
+		}
+
+
 		//Update the user list
 		//---------------------
 		socket.on('updateUserList', (datas) => {
@@ -47,6 +60,38 @@
 			$('.chatUsers').html('').append(userListData);
 		});
 
+
+		//Send the new user message to the server (he will broadcast it to all users)
+		//---------------------------------------------------------------------------
+		$("input[name='userInput']").on('keyup', function(evt) {
+			evt.preventDefault('');
+			let messageFld = $(this);
+
+			//When user press enter
+			//----------------------
+				if(evt.which === 13 && messageFld.val() !== '') {
+					socket.emit('newMessage', {
+						roomID,
+						user, 
+						userPic,
+						message: messageFld.val()
+					});
+
+					//Update HTML localy
+						updateFeed(userPic,  messageFld.val());						
+					//Clear msg
+						messageFld.val('');
+				}
+		});
+
+
+		//Add newly user Messages
+		//-----------------------
+			socket.on("inMessage", (datas) => {
+				let parsedData = JSON.parse(datas);
+				updateFeed(parsedData.userPic, parsedData.message);
+			});
+	});
 	</script>
 
 </head>
@@ -65,10 +110,7 @@
 			<div class="chatMessagesPanel">
 				<div class="chatMessages">
 				<!-- Loop this for chat messages -->
-				<div class="chatBlock">
-					<div class="userPic"><img src="/img/user.jpg"></div>
-					<div class="chatMsg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti perferendis eius aut nesciunt necessitatibus ad nulla, qui sequi, id nam. Possimus odit aut nisi veritatis amet distinctio id officiis ipsam!</div>
-				</div>					
+				
 				<!-- loop end -->
 				</div>
 				<div class="typePanel">
