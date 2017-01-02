@@ -11,7 +11,7 @@
 		'use strict';
 		
 		$(() => {
-			let socket = io('<%= hostUrl %>/roomsList');//, {transports: ['websocket']});
+			let socket = io('<%= hostUrl %>/roomsList', {transports: ['websocket']});
 
 			socket.on('connect', () => console.log('Connected to server'));
 
