@@ -26,6 +26,27 @@
 		});
 
 
+		let userList = user => {
+			return `<div class="userBlock">
+						<div class="userPic"><img src="${user.userPic}" alt="${user.user}"></div>
+						<div class="cuserName">${user.user}</div>
+					</div>`;
+		}
+
+		//Update the user list
+		//---------------------
+		socket.on('updateUserList', (datas) => {
+			let parsedData = JSON.parse(datas);
+			let userListData = '';
+
+			for(let user of parsedData) {
+				userListData += userList(user);
+			}	
+		
+			//Add the list to the DOM (After clear class).
+			$('.chatUsers').html('').append(userListData);
+		});
+
 	</script>
 
 </head>

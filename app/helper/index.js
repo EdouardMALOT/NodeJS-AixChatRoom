@@ -50,8 +50,29 @@
         }
     };
 
+
+    let removeUserFromRoom = (allRooms, socket) => {
+        for(let room of allRooms) {
+            
+            let findUser = room.users.findIndex((element, index, array) => {
+                if(element.socketID === socket.id) {
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+
+            if(findUser > -1) {
+                socket.leave(room.roomID);
+                room.users.splice(findUser, 1);
+                return room;
+            }
+        }
+    };
+
 module.exports = {
     isExistingRoom,
     getRoomFromId,
-    AddUserToRoom
+    AddUserToRoom,
+    removeUserFromRoom
 }

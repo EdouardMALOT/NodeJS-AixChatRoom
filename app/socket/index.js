@@ -48,7 +48,18 @@ module.exports = (io, app) => {
             let userList = helper.AddUserToRoom(allRooms, datas, socket);
         
         //Brodcast the new list of users
-            console.log('userList=', userList);
+            socket.broadcast.to(datas.roomID).emit('updateUserList', JSON.stringify(userList.users));
+        //Send back the list to the new user 
+            socket.emit('updateUserList', JSON.stringify(userList.users));
+        });
+
+
+        socket.on('disconnect', () => {
+            //Find the room where the user left
+            let room = helper.removeUserFromRoom(allRooms, socket);
+
+            //Brodcast the new list of user
+            socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
         });
    });
    
