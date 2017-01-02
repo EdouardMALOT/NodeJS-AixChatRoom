@@ -38,15 +38,15 @@ let port = app.get('port');
         io.set('transports', ['websocket']);
 
         //Set redis
-            let pubClient = redis(config.redis.port, config.redis.host, {auth_pass: config.redis.password});
-            let subClient = redis(config.redis.port, config.redis.host, {
-                return_buffers: true,
-                auth_pass: config.redis.password
-            });
-            io.adapter(adapter({
-                pubClient,
-                subClient
-            }));
+            //let pubClient = redis(config.redis.port, config.redis.host, {auth_pass: config.redis.password});
+            //let subClient = redis(config.redis.port, config.redis.host, {
+            //    return_buffers: true,
+            //    auth_pass: config.redis.password
+            //});
+            //io.adapter(adapter({
+            //    pubClient,
+            //    subClient
+            //}));
 
         io.use( (socket, next) => { session(socket.request, {}, next) });
         require('./app/socket')(io, app);
