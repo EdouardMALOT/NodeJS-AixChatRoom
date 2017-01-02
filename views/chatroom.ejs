@@ -11,7 +11,7 @@
 	$(() => {
 		'use strict';
 
-		let socket = io('<%= hostUrl %>/chatter', {	transports: ['websocket']});
+		let socket = io('<%= hostUrl %>/chatter'); //, {	transports: ['websocket']});
 
 		let roomID = '<%= roomId %>';
 		let roomTitle = '<%= roomTitle %>';
