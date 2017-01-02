@@ -6,7 +6,7 @@ if(process.env.NODE_ENV === 'production') {
     //let redisPassword = redisURI.auth.split(':')[1];
 
     module.exports = {
-        host: "https://aixchat.herokuapp.com/",
+        host: "https://aixchat.herokuapp.com",
         dbURI: process.env.dbURI,
         sessionSecret: process.env.sessionSecret,
         fb: {
