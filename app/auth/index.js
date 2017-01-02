@@ -65,7 +65,7 @@ module.exports = () => {
 
 	let authProcessor = (accessToken, refreshToken, profile, done) => {
 
-        logger.log('info', "authProcessor");
+        console.log("Authentification");
         
 		// Find a user in the local db using profile.id
 		// If the user is found, return the user data using the done()

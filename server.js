@@ -8,6 +8,7 @@ const passport = require('passport');
 const config = require('./app/config');
 const redis = require('redis').createClient;
 const adapter = require('socket.io-redis');
+const logger = require('./app/logger');
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
@@ -16,6 +17,14 @@ app.set('view engine', 'ejs');
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(require('morgan')('tiny', {
+    stream: {
+        write: message => {
+            //write to log
+            logger.log('info', message);
+        }
+    }
+}));
 app.use('/', routes.router);
 
 
