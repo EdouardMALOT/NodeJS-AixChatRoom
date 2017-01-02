@@ -6,13 +6,13 @@ if(process.env.NODE_ENV === 'production') {
     //let redisPassword = redisURI.auth.split(':')[1];
 
     module.exports = {
-        host: process.env.host || "",
+        host: "https://aixchat.herokuapp.com/",
         dbURI: process.env.dbURI,
         sessionSecret: process.env.sessionSecret,
         fb: {
             clientID: process.env.fbClientID,
             clientSecret: process.env.fbClientSecret,
-            callbackURL: process.env.host + "/auth/facebook/callback",
+            callbackURL: "https://aixchat.herokuapp.com/auth/facebook/callback",
             profileFields: ["id", "displayName", "photos"]
         }
         //redis : {
